@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-main: #020B18;
+  --color-bg-secondary: #06152A;
+  --color-bg-card: #081A30;
+  --color-bg-card-hover: #0c2340;
+  --color-brand-blue: #087EFF;
+  --color-brand-blue-hover: #006ce6;
+  --color-brand-cyan: #00B7FF;
+  --color-brand-border: rgba(180, 210, 255, 0.14);
+  --color-brand-border-hover: rgba(0, 183, 255, 0.45);
+  
+  --font-vazir: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  --keyframes-pulse-dot: {
+    0%, 100%: { r: 3; opacity: 1; filter: drop-shadow(0 0 2px #00B7FF); };
+    50%: { r: 4.5; opacity: 0.7; filter: drop-shadow(0 0 6px #00B7FF); };
+  };
+  --animation-pulse-dot: pulse-dot 2s infinite ease-in-out;
+
+  --keyframes-rotate-cw: {
+    from: { transform: rotate(0deg); };
+    to: { transform: rotate(360deg); };
+  };
+  --animation-rotate-cw: rotate-cw 25s linear infinite;
+
+  --keyframes-rotate-ccw: {
+    from: { transform: rotate(360deg); };
+    to: { transform: rotate(0deg); };
+  };
+  --animation-rotate-ccw: rotate-ccw 18s linear infinite;
+}
+
+/* استایل‌های پایه و رفتار اسکرول */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 94px;
+}
+
+body {
+  font-family: var(--font-vazir);
+  background-color: var(--color-bg-main);
+  color: #F5F8FF;
+}
+
+/* کارت‌های سه بعدی با قابلیت حرکت نرم */
+.tilt-card {
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+  will-change: transform;
+}
+
+.tilt-card.is-tilting {
+  transition: none !important;
+}
+
+/* لایه بازتاب نور شناور */
+.card-reflection {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(0, 183, 255, 0.05) 30%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 5;
+}
+
+.tilt-card:hover .card-reflection {
+  opacity: 1;
+}
+
+/* هماهنگی AOS با کارت‌های سه بعدی */
+.aos-item {
+  width: 100%;
+  display: flex;
+}
+.aos-item > .tilt-card {
+  width: 100%;
+}
+/* منوی موبایل: دراپ‌داون تخت (نه پیل گرد) با باز و بسته شدن نرم از بالا */
+@media (max-width: 63.999rem) {
+  #navMenu {
+    border-radius: 0 0 1.5rem 1.5rem;
+    border-width: 0 0 1px 0;
+    transition:
+      translate 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.45s ease,
+      visibility 0.6s;
+  }
+}
